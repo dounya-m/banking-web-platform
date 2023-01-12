@@ -32,4 +32,22 @@ router.post('/', async(req,res) =>{
     }
 })
 
+router.post('/login', async(req,res) => {
+    const {email, password} = req.body
+    if(!email || !password){
+        res.status(400).json({message: 'Please enter your email or passord'})
+    }
+    const user = await User.findOne({email})
+    if(!user){
+        res.status(400)
+        Error('User Not found')
+    }
+    if(user && ( await bcrypt.compare(password, user.password))){
+        res.status(200).json({message: 'You are connect',user})
+    }else{
+        res.status(401).json("Wrong Credentials")
+    }
+
+})
+
 module.exports = router
