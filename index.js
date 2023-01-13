@@ -5,14 +5,16 @@ const dotenv = require('dotenv').config()
 const connectDB = require('./config/db')
 const {errorHandler} = require("./middleware/errorMiddleware")
 const port = process.env.PORT || 3000
+const base = '/api/banka/'
 
 
 const app = express()
 connectDB()
 app.use(express.json())
 
-app.use('/api/banka/user', require('./routes/user/userRoutes'))
 
+app.use(`${base}user`, require('./routes/user/userRoutes'))
+app.use(`${base}compte`, require('./routes/compte/compteRoute'))
 
 app.use(errorHandler)
 app.listen(port, () =>{
