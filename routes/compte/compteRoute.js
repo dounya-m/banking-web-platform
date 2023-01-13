@@ -7,6 +7,6 @@ router.get('/', async(req , res) =>{
     res.status(200).json(compte)
 })
 
-router
+// router
 
 module.exports = router
