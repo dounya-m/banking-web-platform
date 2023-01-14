@@ -7,6 +7,18 @@ router.get('/', async(req , res) =>{
     res.status(200).json(compte)
 })
 
-// router
+router.post('/', async(req, res) =>{
+    try{
+        const {user, amount} = req.body
+        !user || ! amount ? res.status(400).json({message: 'the text is reuired'}):''
+        const compt = await Compte.create({
+            user, amount
+        })
+        await compt.save()
+        res.json(compt)
+        }catch(err){
+            res.status(500).send(err)
+    }
+})
 
 module.exports = router
