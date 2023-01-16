@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const User = require("../../schema/user/userSchema")
 
 router.get('/', async(req, res) =>{
@@ -43,11 +44,26 @@ router.post('/login', async(req,res) => {
         Error('User Not found')
     }
     if(user && ( await bcrypt.compare(password, user.password))){
-        res.status(200).json({message: 'You are connect',user})
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            lastname: user.lastname,
+            email: user.email,
+            adress: user.adress,
+            city: user.city,
+            codeP: user.codeP,
+            token: generateToken(user._id)
+        })
     }else{
         res.status(401).json("Wrong Credentials")
     }
 
 })
+
+const generateToken  = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET,{
+        expiresIn: '1d'
+    })
+}
 
 module.exports = router
