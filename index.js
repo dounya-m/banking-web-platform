@@ -7,8 +7,14 @@ const router = require('./routes/router')
 const {errorHandler} = require("./middleware/errorMiddleware")
 const port = process.env.PORT || 3000
 
+const crosOrigin= {
+    origin: '*'
+}
+
+
 const app = express()
 connectDB()
+// app.use(cors, crosOrigin)
 app.use(express.json())
 app.use(router)
 
