@@ -42,9 +42,10 @@ router.put('/depot/:id', async(req, res) =>{
     })
     res.json(updateCompt)
 })
-// router.get('/userAcc/:user', async(req, res) => {
-//     const acount = await Compte.findOne(req.params.user)
-//     res.json(acount)
-// })
+
+router.get('/userAcc/:user', async(req, res) => {
+    const acount = await Compte.findOne({user: req.params.user})
+    res.json(acount)
+})
 
 module.exports = router
